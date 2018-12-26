@@ -10,7 +10,6 @@ $(document).ready(function(){
       $('h1.heading').text($(this).text());
       // filter link text
       var category = $(this).text().toLowerCase().replace(' ', '-');
-      console.log(category);
       // remove hidden class if "all" is selected
       if(category == 'all-projects'){
           $('ul#gallery li:hidden').fadeIn('slow').removeClass('hidden');
