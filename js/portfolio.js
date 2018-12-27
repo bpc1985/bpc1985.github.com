@@ -28,12 +28,30 @@ $(document).ready(function(){
   $('ul#gallery a').on('click', function(event){
       event.preventDefault();
       var link = $(this).find('img').attr('src');
+      var demoLink = $(this).find('.demoLink').text();
+      var sourceCode = $(this).find('.sourceCode').text();
+
       $('.gallery img').attr('src', '');
       $('.gallery img').attr('src', link);
+
+      if (demoLink !== '' && sourceCode !== '') {
+        $('.gallery div.description').css('visibility', 'visible');
+        $('.gallery a.demoLink').attr('href', '');
+        $('.gallery a.demoLink').attr('href', demoLink);
+        $('.gallery a.sourceCode').attr('href', '');
+        $('.gallery a.sourceCode').attr('href', sourceCode);
+      } else {
+        $('.gallery div.description').css('visibility', 'hidden');
+      }
+
       $('.gallery').fadeIn('slow');
   });
   // close lightbox
-  $('.gallery').on('click', function(event){
+  $('.gallery a.close').on('click', function(event){
+    event.preventDefault();
+    $('.gallery').fadeOut('slow');
+  });
+  $('.gallery img').on('click', function(event){
       event.preventDefault();
       $('.gallery').fadeOut('slow');
   });
