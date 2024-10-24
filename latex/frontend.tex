@@ -1,0 +1,179 @@
+%-------------------------
+% Resume in Latex
+% Author : Hung Ho
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Hung Ngoc Ho} \\ \vspace{1pt}
+    \small  \href{mailto:hungho2812@gmail.com}{\underline{hungho2812@gmail.com}} $|$ (+358) 504488109  $|$
+    \href{https://linkedin.com/in/hongochung}{\underline{linkedin.com/in/hongochung}} $|$
+    \href{https://github.com/bpc1985}{\underline{github.com/bpc1985}}
+\end{center}
+
+%-----------PROFILE-----------
+\section{Professional Summary}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     {Highly skilled front-end developer with extensive experience in ReactJS and TypeScript, specializing in building dynamic, high-performance web applications. Proven track record of delivering scalable and maintainable solutions using modern frameworks like ReactJS, NextJS, and AWS. Adept at both front-end and back-end integration, with  knowledge of web standards and agile development methodologies.} \\
+    }}
+ \end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Aalto University  }{Espoo, Finland}
+      {Master's Degree in Engineering, Information Networks }{Sep. 2017 -- No Award}
+    \resumeSubheading
+      {Åbo Akademi University }{Turku, Finland}
+      {Master's Degree in Engineering, Software Engineering }{Sep. 2015 -- May 2018}
+    \resumeSubheading
+      {Metropolia University of Applied Sciences }{Espoo, Finland}
+      {Bachelor's Degree in Engineering, Media Engineering }{Sep. 2009 -- May 2014}
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Senior Frontend Developer}{Sep 2021 -- Aug 2024}
+      {ResultElf Oy}{Espoo, Finland}
+      \resumeItemListStart
+        \resumeItem{Developed a REST API using FastAPI and PostgreSQL as part of an internal project.}
+        \resumeItem{Led the development of a full-stack web application for the Cresso platform using Monorepo, NodeJS, PostgreSQL, ReactJS, Typescript, Zustand, React-Query, MUI, Echarts, Docker and Kubernetes.}
+        \resumeItem{Built a modern, responsive user interface using Next.js and TailwindCSS for the company website.}
+        \resumeItem{Established unit testing, code coverage, CI/CD pipelines for frontend projects using Github Actions.}
+        \resumeItem{Monitored and visualized frontend metrics with Amazon CloudWatch RUM.}
+        \resumeItem{Integrated the Matomo web analytics platform for tracking online visits and generating analysis reports.}
+        \resumeItem{Created Grafana queries to visualize data in dashboards.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Senior Frontend Developer}{Jan 2020 -- Jul 2021}
+      {Quanturi Oy}{Espoo, Finland}
+      \resumeItemListStart
+        \resumeItem{Designed and implemented a robust REST API for the Quanturi monitoring dashboard backend, leveraging Node.js, ExpressJS, MongoDB, and RabbitMQ to optimize data flow and ensure reliable asynchronous communication between services, enhancing system scalability and performance.}
+        \resumeItem{Migration of legacy code to a modern frontend stack using ReactJS and TypeScript, resulting in a more efficient, responsive user interface. Improved code maintainability and modularity through ReactJS component architecture and streamlined state management with Redux. Enhanced user experience by optimizing responsiveness and performance with MUI.}
+        \resumeItem{Set up CICD pipelines for the dashboard project using AWS CodePipeline.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Frontend Developer}{Jul 2014 -- Oct 2019}
+      {Verto Analytics Oy}{Espoo, Finland}
+      \resumeItemListStart
+        \resumeItem{Developed and maintained Verto's frontend applications using AngularJS, ReactJS, Redux, and Highcharts.}
+        \resumeItem{Ensured the technical feasibility of UI/UX designs and optimized applications for performance and scalability.}
+        \resumeItem{Managed CI pipelines with Jenkins and ensured compliance with required testing standards.}
+        \resumeItem{Collaborated with users to gather feedback and implement improvements.}
+        \resumeItem{Authored functional requirement documents and technical guides.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Java, \texttt{C\#}, Python, HTML/CSS, Javascript (ES6), Typescript} \\
+     \textbf{Frontend}{: VueJS, ReactJS, NextJS, Redux, Zustand, Vite (Rollup), Micro-frontends, MUI, TailwindCSS} \\
+     \textbf{Testing}{: Jasmine, Jest, Vitest, React Testing Library, Cypress, Code coverage with C8 } \\
+     \textbf{Backend}{: Node.js, Express, FastAPI, Spring Boot, AWS Lambda} \\
+     \textbf{Databases}{: MySQL, PostgreSQL, MongoDB, Prisma, GraphQL, AWS RDS, DynamoDB} \\
+     \textbf{Mobile}{: React Native (Expo), Flutter (Basic)} \\
+     \textbf{Tools}{: Git, Docker, Github Actions, AWS, VS Code, PyCharm, IntelliJ, Eclipse} \\
+     \textbf{Chart Libraries}{: Highcharts, Recharts, Echarts}
+    }}
+ \end{itemize}
+
+\end{document}
