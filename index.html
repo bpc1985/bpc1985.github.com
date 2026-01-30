@@ -1,240 +1,977 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hung Ho's CV</title>
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hung Ho | Full-stack Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of Hung Ho, a Full-stack Developer specializing in ReactJS, Node.js, and scalable web applications."
+    />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#3b82f6", // Blue-500
+              secondary: "#64748b", // Slate-500
+              dark: "#0f172a", // Slate-900
+              card: "#1e293b", // Slate-800
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- React & ReactDOM -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+
+    <!-- Framer Motion (Animations) -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <!-- Babel (to compile JSX in browser) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background-color: #0f172a;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+    </style>
   </head>
-
   <body>
-    <nav class="Navbar">
-        <div class="l-Wrapper l-Wrapper--reset@sm-down">
-          <ul class="u-pullRight u-hidden@xs-down">
-            <li>
-              <a
-                class="Navbar-btn Navbar-btn--main"
-                href="https://bpc1985.github.io/cv/resume-hung-ho.pdf"
-                target="_blank">
-                Download CV &nbsp; <span>(pdf)</span>
-              </a>
-            </li>
-          </ul>
-          <ul>
-            <li><a href="https://www.linkedin.com/in/hongochung" target="_blank">Linkedin</a></li>
-            <li><a href="https://github.com/bpc1985?tab=repositories" target="_blank">GitHub</a></li>
-            <li><a href="porfolio.html" target="_blank">Porfolio</a></li>
-            <li><a href="https://bpc1985.github.io/cv/work-certificate-hung-ho.pdf" target="_blank">Work Certificate</a></li>
-            <li><a href="https://codesandbox.io/u/bpc1985/sandboxes" target="_blank">Code Snippet</a></li>
-          </ul>
-        </div>
-      </nav>
+    <div id="root"></div>
 
-      <article class="l-Wrapper">
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      const { motion, AnimatePresence } = window.Motion;
 
-        <div class="l-Header">
-          <div class="l-Header-col">
-            <a href="https://www.linkedin.com/in/hongochung" target="_blank">
-              <h1 class="Title">
-                <span class="u-shadow">
-                  Hung Ho
-                </span>
-                <span class="Title-sub">
-                  Software Engineer (Web Developer)
+      // --- Icons (SVG Components) ---
+      const Icon = ({ path, className }) => (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={className}
+        >
+          {path}
+        </svg>
+      );
+
+      const Icons = {
+        Mail: props => (
+          <Icon
+            path={
+              <>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Phone: props => (
+          <Icon
+            path={
+              <>
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </>
+            }
+            {...props}
+          />
+        ),
+        MapPin: props => (
+          <Icon
+            path={
+              <>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Github: props => (
+          <Icon
+            path={
+              <>
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Linkedin: props => (
+          <Icon
+            path={
+              <>
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </>
+            }
+            {...props}
+          />
+        ),
+        ExternalLink: props => (
+          <Icon
+            path={
+              <>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Code: props => (
+          <Icon
+            path={
+              <>
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Database: props => (
+          <Icon
+            path={
+              <>
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Server: props => (
+          <Icon
+            path={
+              <>
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Briefcase: props => (
+          <Icon
+            path={
+              <>
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </>
+            }
+            {...props}
+          />
+        ),
+        ChevronDown: props => (
+          <Icon
+            path={
+              <>
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </>
+            }
+            {...props}
+          />
+        ),
+        Cpu: props => (
+          <Icon
+            path={
+              <>
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                <rect x="9" y="9" width="6" height="6"></rect>
+                <line x1="9" y1="1" x2="9" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="9" y1="20" x2="9" y2="23"></line>
+                <line x1="15" y1="20" x2="15" y2="23"></line>
+                <line x1="20" y1="9" x2="23" y2="9"></line>
+                <line x1="20" y1="14" x2="23" y2="14"></line>
+                <line x1="1" y1="9" x2="4" y2="9"></line>
+                <line x1="1" y1="14" x2="4" y2="14"></line>
+              </>
+            }
+            {...props}
+          />
+        ),
+      };
+
+      // --- Data from CV ---
+      const cvData = {
+        name: "Hung Ho",
+        role: "Full-stack Developer",
+        location: "Espoo, Finland",
+        email: "hungho2812@gmail.com",
+        phone: "+358 504488109",
+        links: {
+          linkedin: "https://linkedin.com/in/hongochung",
+          github: "https://github.com/bpc1985",
+        },
+        summary:
+          "Full-stack developer with years of experience building scalable, high-performance web applications. Experienced in designing, developing, and maintaining applications using ReactJS, Node.js, Python, Java and PostgreSQL. Enthusiastic about learning new technologies, especially in areas such as system integration and application lifecycle management.",
+        skills: {
+          frontend: [
+            "TypeScript",
+            "VueJS",
+            "ReactJS",
+            "NextJS",
+            "TailwindCSS",
+            "Redux/Zustand",
+            "React Native (Expo)",
+            "Flutter",
+          ],
+          backend: [
+            "NodeJS",
+            "ExpressJS",
+            "NestJS",
+            "FastAPI",
+            "REST APIs",
+            "GraphQL",
+            "Python",
+            "Golang",
+            "C#",
+            "Java",
+            "Spring Boot",
+            "Gin",
+          ],
+          database: [
+            "PostgreSQL",
+            "MongoDB",
+            "Prisma",
+            "AWS DynamoDB",
+            "AWS RDS",
+          ],
+          devops: [
+            "Docker",
+            "Kubernetes",
+            "GitHub Actions",
+            "AWS",
+            "AWS Lambda",
+            "CloudWatch",
+          ],
+          tools: [
+            "Jest",
+            "Vitest",
+            "Cypress",
+            "React Testing Library",
+            "Highcharts",
+            "Recharts",
+            "Echarts",
+            "CI/CD",
+            "Jenkins",
+            "AWS CodePipeline",
+          ],
+        },
+        experience: [
+          {
+            company: "ResultElf Oy",
+            role: "Full-stack Developer",
+            period: "Sep 2021 – Aug 2024",
+            location: "Espoo, Finland",
+            highlights: [
+              "Developed a REST API using FastAPI and PostgreSQL as part of an internal project.",
+              "Led the development of a full-stack web application for the Cresso platform using Monorepo, NodeJS, PostgreSQL, ReactJS, Typescript, Zustand, React-Query, MUI, Echarts, Docker and Kubernetes.",
+              "Built a modern, responsive user interface using Next.js and TailwindCSS for the company website.",
+              "Established unit testing, code coverage, CI/CD pipelines for frontend projects using Github Actions.",
+              "Monitored and visualized frontend metrics with Amazon CloudWatch RUM.",
+              "Integrated the Matomo web analytics platform for tracking online visits and generating analysis reports.",
+              "Created Grafana queries to visualize data in dashboards.",
+            ],
+          },
+          {
+            company: "Quanturi Oy",
+            role: "Full-stack Developer",
+            period: "Jan 2020 – Jul 2021",
+            location: "Espoo, Finland",
+            highlights: [
+              "Designed and implemented a robust REST API for the Quanturi monitoring dashboard backend, leveraging Node.js, ExpressJS, MongoDB, and RabbitMQ to optimize data flow and ensure reliable asynchronous communication between services.",
+              "Migration of legacy code to a modern frontend stack using ReactJS and TypeScript, resulting in a more efficient, responsive user interface. Improved code maintainability and modularity through ReactJS component architecture.",
+              "Set up CICD pipelines for the dashboard project using AWS CodePipeline.",
+            ],
+          },
+          {
+            company: "Verto Analytics Oy",
+            role: "Frontend Developer",
+            period: "Jul 2014 – Oct 2019",
+            location: "Espoo, Finland",
+            highlights: [
+              "Developed and maintained Verto’s frontend applications using AngularJS, ReactJS, Redux, and Highcharts.",
+              "Ensured the technical feasibility of UI/UX designs and optimized applications for performance and scalability.",
+              "Managed CI pipelines with Jenkins and ensured compliance with required testing standards.",
+              "Collaborated with users to gather feedback and implement improvements.",
+              "Authored functional requirement documents and technical guides.",
+            ],
+          },
+        ],
+        projects: [
+          {
+            name: "Oneprocess.ai",
+            role: "Co-founded and Full-stack Developer",
+            period: "Jun 2025 – Dec 2025",
+            type: "Personal Project",
+            description:
+              "Developed a high-performance frontend using Next.js and modern design patterns. Engineered a scalable backend architecture using NestJS. Utilized AI-assisted coding tools with Claude Code.",
+            tech: ["Next.js", "NestJS", "Claude Code", "AI Tools"],
+          },
+        ],
+        education: [
+          {
+            school: "Aalto University",
+            degree: "Master’s Degree in Engineering, Information Networks",
+            period: "Sep. 2017 – No Award",
+            location: "Espoo, Finland",
+          },
+          {
+            school: "Åbo Akademi University",
+            degree: "Master’s Degree in Engineering, Software Engineering",
+            period: "Sep. 2015 – May 2018",
+            location: "Turku, Finland",
+          },
+          {
+            school: "Metropolia University of Applied Sciences",
+            degree: "Bachelor’s Degree in Engineering, Media Engineering",
+            period: "Sep. 2009 – May 2014",
+            location: "Espoo, Finland",
+          },
+        ],
+      };
+
+      // --- Helper Components ---
+
+      const SectionTitle = ({ children, icon: Icon }) => (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center space-x-3 mb-8 mt-16"
+        >
+          {Icon && <Icon className="text-primary w-8 h-8" />}
+          <h2 className="text-3xl font-bold text-white tracking-tight">
+            {children}
+          </h2>
+          <div className="h-px bg-slate-700 flex-grow ml-4"></div>
+        </motion.div>
+      );
+
+      const Badge = ({ children }) => (
+        <span className="inline-block px-3 py-1 m-1 text-sm font-medium text-slate-300 bg-slate-800 rounded-full border border-slate-700 hover:border-primary hover:text-primary transition-colors cursor-default">
+          {children}
+        </span>
+      );
+
+      const SkillCategory = ({ title, skills, icon: Icon }) => (
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="mb-6"
+        >
+          <h3 className="text-lg font-semibold text-slate-200 mb-3 flex items-center">
+            {Icon && <Icon className="w-5 h-5 mr-2 text-secondary" />}
+            {title}
+          </h3>
+          <div className="flex flex-wrap gap-y-2">
+            {skills.map((skill, index) => (
+              <motion.span
+                key={index}
+                whileHover={{ scale: 1.05 }}
+                className="bg-slate-800/50 border border-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-sm hover:border-primary hover:text-primary hover:bg-slate-800 transition-all"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
+      );
+
+      // --- Main Components ---
+
+      const Navbar = () => {
+        const [scrolled, setScrolled] = useState(false);
+        const [isOpen, setIsOpen] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => setScrolled(window.scrollY > 50);
+          window.addEventListener("scroll", handleScroll);
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        const navItems = [
+          "About",
+          "Skills",
+          "Experience",
+          "Projects",
+          "Education",
+        ];
+
+        const highlightedNavItem = {
+          label: "CV & Certificates",
+          href: "cv-certificates"
+        };
+
+        return (
+          <nav
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-dark/80 backdrop-blur-md border-b border-slate-800 shadow-lg" : "bg-transparent"}`}
+          >
+            <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                HH
+              </div>
+
+              {/* Desktop Menu */}
+              <div className="hidden md:flex space-x-8 items-center">
+                {navItems.map(item => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                  >
+                    {item}
+                  </a>
+                ))}
+                <a
+                  href="porfolio.html"
+                  className="text-sm font-medium px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                >
+                  Portfolio
+                </a>
+                <a
+                  href={`#${highlightedNavItem.href}`}
+                  className="text-sm font-medium px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                >
+                  {highlightedNavItem.label}
+                </a>
+              </div>
+
+              {/* Mobile Toggle */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden text-slate-300"
+              >
+                {isOpen ? (
+                  <Icons.ChevronDown />
+                ) : (
+                  <Icons.Code className="rotate-90" />
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="md:hidden bg-card border-b border-slate-800 overflow-hidden"
+                >
+                  <div className="flex flex-col p-4 space-y-4">
+                    {navItems.map(item => (
+                      <a
+                        key={item}
+                        href={`#${item.toLowerCase()}`}
+                        onClick={() => setIsOpen(false)}
+                        className="text-slate-300 hover:text-white"
+                      >
+                        {item}
+                      </a>
+                    ))}
+                    <a
+                      href="porfolio.html"
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm font-medium px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-center"
+                    >
+                      Portfolio
+                    </a>
+                    <a
+                      href={`#${highlightedNavItem.href}`}
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm font-medium px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-center"
+                    >
+                      {highlightedNavItem.label}
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </nav>
+        );
+      };
+
+      const Hero = () => (
+        <section className="min-h-screen flex items-center justify-center relative pt-20">
+          {/* Background Gradient */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+                Open to Work: Finland / EU / Remote
+              </span>
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-tight">
+                Hi, I'm{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                  {cvData.name}
                 </span>
               </h1>
-            </a>
-          </div>
-          <div class="l-Header-col Contact">
-            <div>Helsinki, Finland</div>
-            <div><a class="u-link" href="https://bpc1985.github.io/" target="_blank">https://bpc1985.github.io</a></div>
-            <div><a class="u-link" href="mailto:ho.ngoc.hung2812@gmail.com" target="_blank">ho.ngoc.hung2812@gmail.com</a></div>
-          </div>
-        </div>
+              <p className="text-2xl md:text-3xl text-slate-400 font-light mb-8">
+                {cvData.role}
+              </p>
+            </motion.div>
 
-        <section class="l-Section">
-          <h2 class="l-Section-title h3 u-hidden@sm-down">Profile</h2>
-          <div class="l-Section-content">
-            <p>
-              I am an aspiring web developer having passion for making websites more senses.
-              I have a strong interest in web standards and emerging technologies with Angular, ReactJS, GraphQL, PWA, Serverless in AWS Cloud.
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+            >
+              {cvData.summary}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col sm:flex-row justify-center gap-4 mb-12"
+            >
+              <a
+                href="#contact"
+                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-500/25"
+              >
+                Get in Touch
+              </a>
+              <a
+                href={cvData.links.github}
+                target="_blank"
+                className="px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+              >
+                <Icons.Github className="w-4 h-4" />
+                GitHub Profile
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex justify-center gap-6 text-slate-400"
+            >
+              <a
+                href={`mailto:${cvData.email}`}
+                className="hover:text-blue-400 transition-colors"
+              >
+                <Icons.Mail className="w-6 h-6" />
+              </a>
+              <a
+                href={cvData.links.linkedin}
+                target="_blank"
+                className="hover:text-blue-400 transition-colors"
+              >
+                <Icons.Linkedin className="w-6 h-6" />
+              </a>
+              <a
+                href={cvData.links.github}
+                target="_blank"
+                className="hover:text-blue-400 transition-colors"
+              >
+                <Icons.Github className="w-6 h-6" />
+              </a>
+            </motion.div>
+          </div>
+        </section>
+      );
+
+      const About = () => (
+        <section id="about" className="py-20 px-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="md:col-span-1"
+            >
+              <h2 className="text-3xl font-bold text-white mb-6">About Me</h2>
+              <p className="text-slate-400 leading-relaxed">
+                I am adept at working in agile teams, writing clean and
+                efficient code, and implementing DevOps practices for automation
+                and deployment. I am enthusiastic about learning new
+                technologies, especially in areas such as system integration and
+                application lifecycle management.
+              </p>
+              <div className="mt-8 space-y-3 text-sm text-slate-400">
+                <div className="flex items-center gap-3">
+                  <Icons.MapPin className="w-4 h-4 text-primary" />
+                  <span>{cvData.location}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icons.Mail className="w-4 h-4 text-primary" />
+                  <a
+                    href={`mailto:${cvData.email}`}
+                    className="hover:text-white"
+                  >
+                    {cvData.email}
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icons.Phone className="w-4 h-4 text-primary" />
+                  <span>{cvData.phone}</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="md:col-span-2"
+            >
+              <h2 className="text-3xl font-bold text-white mb-6">
+                Additional Qualifications
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                  <h3 className="font-semibold text-white mb-2">
+                    Communication
+                  </h3>
+                  <p className="text-sm text-slate-400">
+                    English and basic Finnish; experienced in cross-functional
+                    collaboration, writing technical documentation, and
+                    gathering user requirements.
+                  </p>
+                </div>
+                <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                  <h3 className="font-semibold text-white mb-2">
+                    AI-Assisted Development
+                  </h3>
+                  <p className="text-sm text-slate-400">
+                    Proficient with Claude Code, Cursor, and OpenCode for
+                    accelerated development workflows.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      );
+
+      const Skills = () => (
+        <section id="skills" className="py-20 px-6 max-w-6xl mx-auto">
+          <SectionTitle icon={Icons.Cpu}>Technical Skills</SectionTitle>
+          <div className="grid md:grid-cols-2 gap-x-12">
+            <SkillCategory
+              title="Frontend"
+              skills={cvData.skills.frontend}
+              icon={Icons.Code}
+            />
+            <SkillCategory
+              title="Backend"
+              skills={cvData.skills.backend}
+              icon={Icons.Server}
+            />
+            <SkillCategory
+              title="Database & Cloud"
+              skills={[...cvData.skills.database, ...cvData.skills.devops]}
+              icon={Icons.Database}
+            />
+            <SkillCategory
+              title="Tools & Testing"
+              skills={cvData.skills.tools}
+              icon={Icons.Briefcase}
+            />
+          </div>
+        </section>
+      );
+
+      const Experience = () => (
+        <section id="experience" className="py-20 px-6 max-w-4xl mx-auto">
+          <SectionTitle icon={Icons.Briefcase}>Experience</SectionTitle>
+          <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+            {cvData.experience.map((job, index) => (
+              <div
+                key={index}
+                className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <Icons.Briefcase className="w-5 h-5 text-primary" />
+                </div>
+
+                {/* Card */}
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="p-6 rounded-xl bg-card border border-slate-700 shadow-lg hover:border-slate-500 transition-colors"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="font-bold text-xl text-white">
+                          {job.role}
+                        </h3>
+                        <p className="text-primary font-medium">
+                          {job.company}
+                        </p>
+                      </div>
+                      <span className="text-xs font-semibold px-2 py-1 bg-slate-700 rounded text-slate-300 whitespace-nowrap ml-2">
+                        {job.period}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mb-4">
+                      <Icons.MapPin className="w-3 h-3 inline mr-1" />
+                      {job.location}
+                    </p>
+                    <ul className="space-y-2 text-slate-400 text-sm">
+                      {job.highlights.map((point, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="mr-2 text-primary">•</span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+
+      const Projects = () => (
+        <section id="projects" className="py-20 px-6 max-w-6xl mx-auto">
+          <SectionTitle icon={Icons.ExternalLink}>
+            Personal Projects
+          </SectionTitle>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cvData.projects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                className="bg-card rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all shadow-lg"
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold text-white">
+                    {project.name}
+                  </h3>
+                  <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded border border-blue-500/20">
+                    {project.type}
+                  </span>
+                </div>
+                <p className="text-slate-400 text-sm mb-4">
+                  {project.description}
+                </p>
+                <div className="text-xs text-slate-500 mb-2">
+                  {project.role} <span className="mx-1">•</span>{" "}
+                  {project.period}
+                </div>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tech.map((t, i) => (
+                    <Badge key={i}>{t}</Badge>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      );
+
+      const Documents = () => (
+        <section id="cv-certificates" className="py-20 px-6 max-w-4xl mx-auto">
+          <SectionTitle icon={Icons.ExternalLink}>CV & Certificates</SectionTitle>
+          <div className="grid sm:grid-cols-2 gap-6">
+            <motion.a
+              href="files/hung_ho_cv.pdf"
+              target="_blank"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="flex items-center gap-4 p-6 bg-card rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all shadow-lg group"
+            >
+              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="12" y1="18" x2="12" y2="12"></line>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">Curriculum Vitae</h3>
+                <p className="text-sm text-slate-400">View PDF</p>
+              </div>
+            </motion.a>
+            <motion.a
+              href="files/work-certificate-hung-ho.pdf"
+              target="_blank"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              whileHover={{ y: -5 }}
+              className="flex items-center gap-4 p-6 bg-card rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all shadow-lg group"
+            >
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <path d="M9 15l2 2 4-4"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white group-hover:text-emerald-400 transition-colors">Work Certificate</h3>
+                <p className="text-sm text-slate-400">View PDF</p>
+              </div>
+            </motion.a>
+          </div>
+        </section>
+      );
+
+      const Education = () => (
+        <section id="education" className="py-20 px-6 max-w-4xl mx-auto">
+          <SectionTitle icon={Icons.Code}>Education</SectionTitle>
+          <div className="space-y-6">
+            {cvData.education.map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex flex-col md:flex-row md:items-center bg-slate-800/30 p-4 rounded-lg border-l-4 border-primary"
+              >
+                <div className="flex-grow">
+                  <h3 className="text-lg font-bold text-white">{edu.school}</h3>
+                  <p className="text-slate-300">{edu.degree}</p>
+                </div>
+                <div className="text-right mt-2 md:mt-0">
+                  <p className="text-sm text-slate-400">{edu.period}</p>
+                  <p className="text-sm text-slate-500">{edu.location}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      );
+
+      const Footer = () => (
+        <footer
+          id="contact"
+          className="border-t border-slate-800 bg-slate-900 pt-16 pb-8"
+        >
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Let's Connect
+            </h2>
+            <p className="text-slate-400 mb-8">
+              I'm currently available for work and open to discussing new
+              opportunities.
             </p>
+            <div className="flex justify-center gap-4 mb-12">
+              <a
+                href={`mailto:${cvData.email}`}
+                className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-slate-700 transition-all"
+              >
+                Email Me
+              </a>
+              <a
+                href={cvData.links.linkedin}
+                target="_blank"
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-all"
+              >
+                LinkedIn
+              </a>
+            </div>
+            <div className="text-slate-600 text-sm">
+              &copy; {new Date().getFullYear()} Hung Ngoc Ho. Built with React &
+              Tailwind CSS.
+            </div>
           </div>
-        </section>
+        </footer>
+      );
 
-        <section class="l-Section">
-          <h2 class="l-Section-title h3">Objective</h2>
-          <div class="l-Section-content">
-              <div>Develop both independent and cloud web applications.</div>
-              <div>Plan to achieve AWS and CKAD certificates for developer.</div>
+      const App = () => {
+        return (
+          <div className="antialiased font-sans text-slate-300 selection:bg-blue-500 selection:text-white">
+            <Navbar />
+            <Hero />
+            <About />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Education />
+            <Documents />
+            <Footer />
           </div>
-        </section>
+        );
+      };
 
-        <section class="l-Section">
-          <h2 class="l-Section-title h3">Skills</h2>
-          <div class="l-Section-content">
-            <p>
-              <strong>Frontend Development</strong>
-              <ul>
-                <li>W3C Standards with <strong class="Tag">HTML5</strong> and <strong class="Tag">CSS3</strong>.</li>
-                <li>LESS, <strong class="Tag">SASS</strong>, CSS-in-JS (<strong class="Tag">Styled-components</strong>, <strong class="Tag">Emotion</strong>) and CSS frameworks.</li>
-                <li><strong class="Tag">Javascript</strong> with ES2020 and <strong class="Tag">Typescript</strong>.</li>
-                <li>MVC JS Framework with <strong class="Tag">ReactJS</strong> (<strong class="Tag">NextJS</strong>), AngularJS and <strong class="Tag">VueJS</strong>.</li>
-                <li>REST and <strong class="Tag">GraphQL</strong> with <strong class="Tag">Apollo Client</strong>, <strong class="Tag">AWS AppSync</strong> and <strong class="Tag">AWS Amplify</strong>.</li>
-                <li>Bower, Gulp, <strong class="Tag">Webpack</strong> and JS Testing Framework with <strong class="Tag">Jasmine</strong>, <strong class="Tag">Jest</strong> and <strong class="Tag">Vitest</strong>.</li>
-                <li>Continuous Deployment with <strong class="Tag">Jenkins</strong>, <strong class="Tag">Github Actions</strong> and <strong class="Tag">AWS CICD</strong></li>
-              </ul>
-            </p>
-
-            <p>
-              <strong>Backend Development</strong>
-              <ul>
-                <li><strong class="Tag">NodeJS</strong>, <strong class="Tag">ExpressJS</strong> and <strong class="Tag">Apollo GraphQL Server</strong></li>
-                <li>Familiar with <strong class="Tag">Java</strong>, <strong class="Tag">C#</strong> and <strong class="Tag">Python</strong>.</li>
-                <li><strong class="Tag">MariaDB</strong> and <strong class="Tag">NoSQL</strong> with <strong class="Tag">MongoDB</strong></li>
-                <li>AWS usage with <strong class="Tag">EC2</strong>, <strong class="Tag">Beantalks</strong>, <strong class="Tag">Fargate</strong>, <strong class="Tag">S3</strong>, <strong class="Tag">CloudFront</strong>,
-                  <strong class="Tag">Cognito</strong>, <strong class="Tag">Lambda</strong>, <strong class="Tag">DynamoDB</strong>.</li>
-              </ul>
-            </p>
-
-            <p>
-              <strong>Mobile Development</strong>
-              <ul>
-                <li><strong class="Tag">Ionic</strong> Hybrid Mobile App Framework.</li>
-                <li><strong class="Tag">React Native</strong>.</li>
-              </ul>
-            </p>
-          </div>
-        </section>
-
-        <section class="l-Section">
-          <h2 class="l-Section-title h3">Side Project</h2>
-          <div class="l-Section-content">
-            <ul>
-              <li>I am learning and developing small decentralized web application to test new features with <strong class="Tag">Solidity</strong>
-                and <strong class="Tag">Rust</strong>.</li>
-              <li>Playground with some new features in latest ReactJS including <a href="https://github.com/bpc1985/react-hooks-playground" target="_blank">Memo, Hooks</a>,
-                <a href="https://github.com/bpc1985/react-lazy-suspense-playground" target="_blank">Suspense and Lazy</a></li>
-              <li>Playground with <strong class="Tag">Serverless</strong> and <strong class="Tag">AWS</strong> examples to understand more AWS Services and especially CloudFormation</li>
-              <li>Plan to have a playground with <strong class="Tag">GatsbyJS</strong> and <strong class="Tag">JAMstack</strong> soon!</li>
-            </ul>
-            <p>
-            </p>
-          </div>
-        </section>
-
-        <section class="l-Section">
-          <h2 class="l-Section-title h3">Experience</h2>
-          <div class="l-Section-content">
-            <h3>Web Developer</h3>
-            <a class="u-link" href="https://resultelf.com/" target="_blank">ResultElf Oy, Espoo</a><br> Sep 2021 - August 2024
-            <ul>
-              <li>
-                Role as developer working with a small team of four members to create and manage Cresso platform for credit optimization. Use Typescript, NodeJS, ReactJS and AWS services, among other tools and libraries, to design the platform, run unit-testing and continuous integration (CI) and continuous delivery (CD).
-              </li>
-            </ul>
-
-            <h3>Web Developer</h3>
-            <a class="u-link" href="https://quanturi.com/" target="_blank">Quanturi Oy, Espoo</a><br> Jan 2020 - July 2021
-            <ul>
-              <li>Working as part of a small team of international developers, my role consists of designing, implementing, maintaining and testing web applications both frontend (ReactJS) and backend (NodeJS) in AWS services.</li>
-            </ul>
-
-            <h3>Frontend Developer (Freelance)</h3>
-            <a class="u-link" href="https://www.navigil.com/" target="_blank">Navigil Oy, Espoo</a><br> Aug 2019 - now
-            <ul>
-              <li>Role in developing Navigil web applications by using ReactJS, Redux, AWS</li>
-            </ul>
-
-            <h3>Software Engineer (Front-End)</h3>
-            <a class="u-link" href="https://www.vertoanalytics.com/" target="_blank">Verto Analytics Oy, Helsinki</a><br> July 2014 - Oct 2019
-            <ul>
-              <li>Role in developing all Verto’s web applications by using AngularJS, ReactJS, Redux, illustrating data with HighchartJS and doing continuous deployment with Jenkins, GitLab and AWS services.</li>
-              <li>Introduced Gulp, Webpack, Npm and Yarn to automate common tasks, optimize frontend assets and manage third party packages.</li>
-              <li>Created and maintained a style guide to use as a reference for our design language.</li>
-              <li>Delivered front-end work for various internal projects to the backend team.</li>
-              <li>Working with design team, and support team to give the best practice and work flow</li>
-            </ul>
-
-            <h3>Web Developer</h3>
-            <a class="u-link" href="http://www.lapioworks.io/" target="_blank">Lapioworks Oy, Espoo</a><br> June 2013 - July 2014
-            <ul>
-              <li>Working as part of a small team of international developers, my role consists of testing and developing two sites Bookiwoo and Bookihotels.</li></li>
-            </ul>
-
-            <h3>Web Developer</h3>
-            <a class="u-link" href="https://filmfriend.herokuapp.com/" target="_blank">FilmFriend Startup, Helsinki</a><br> Jan 2013 - June 2013
-            <ul>
-              <li>FilmFriend is the network to help customers and videographer connect together. Its main goal are finding videographer to edit wedding videos and offer them with wedding services.</li>
-              <li>With my startup project, I am the principal developer of project and complete database, coding functions in both frontend and backend.</li>
-            </ul>
-
-            <h3>Trainee Web Developer</h3>
-            <a class="u-link" href="http://www.dooxe.fi/" target="_blank">Dooxe Oy, Helsinki</a><br> June 2012 - Nov 2012
-            <ul>
-              <li>Dooxe Oy needs to clone his current website dooxe.fi to new one named Korjausurakka to expand more business features.</li>
-              <li>As web developer, I mainly develop new features with Zend framework and maintain web server for testing and implementation.</li>
-            </ul>
-
-            <h3>Freelance Web Developer</h3>
-            <a class="u-link" href="http://www.varaoke.eu/" target="_blank">Varaoke Oy, Tampere</a><br> June 2009 - May 2009
-            <ul>
-              <li>Varaoke Oy owner wanted to upgrade his own company website for better management in administration but still maintain front-end layout.</li>
-              <li>I worked as a programmer to design, develop and maintain company website including analysing database and coding backend and frontend using PHP and Symfony framework.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="l-Section">
-          <h2 class="l-Section-title h3">Education</h2>
-          <div class="l-Section-content">
-            <h3>Bachelor’s Degree of Engineering, Media Engineering</h3>
-            <a
-              class="u-link"
-              href="http://opinto-opas-ops.metropolia.fi/index.php/en/16183/en/83"
-              target="_blank">
-              Metropolia University of Applied Sciences</a><br> 2009 - 2014
-            <p>Full-time degree programme that provides the technical expertise
-              in areas including web (backend and frontend development) and multimedia.</p>
-            <p>Major with Java & .NET application programming and Web development.</p>
-
-            <h3>Master’s Degree of Engineering, Software Engineering</h3>
-            <a
-              class="u-link"
-              href="https://www.abo.fi/en/study-programme/masters-degree-programme-in-information-technology/"
-              target="_blank">
-              Åbo Akademi University</a><br> 2015 - 2018
-            <p>Full-time higher degree programme to become a professional problem-solver in software development
-              and gain a more in-depth understanding of high performance computing and software technology.</p>
-
-            <h3>Master’s Degree of Engineering, Information Networks</h3>
-            <a
-              class="u-link"
-              href="https://into.aalto.fi/display/eninf/Information+Networks"
-              target="_blank">
-              Aalto University</a><br> 2017 (No Award)
-            <p>Full-time degree program in engineering building on information technology and digital media. It also combines the fields of social sciences, advanced digital technologies and business..</p>
-          </div>
-        </section>
-
-        <section class="l-Section u-hidden@print">
-          <h2 class="l-Section-title h3">Interests</h2>
-          <div class="l-Section-content">
-            <p>Blockchain, Web Standards, Technology, Simplicity, Reading, Snowboarding, Coffee, Food, Football, Badminton, Music, Movies, Traveling, Cabins, Plants</p>
-          </div>
-        </section>
-      </article>
-
-      <div class="l-Wrapper u-keyline">
-        <div class="l-Footer">
-          <div class="l-Footer-col">
-            <strong class="Tag">Hung Ho</strong>
-          </div>
-          <div class="l-Footer-col Contact">
-            <a href="mailto:ho.ngoc.hung2812@gmail.com" target="_blank">ho.ngoc.hung2812@gmail.com</a>
-          </div>
-        </div>
-      </div>
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
   </body>
 </html>

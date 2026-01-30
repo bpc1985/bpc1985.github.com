@@ -1,98 +1,455 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hung Ho's Porfolio</title>
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
-    <link href="css/portfolio.css" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/portfolio.js"></script>
-  </head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Hung Ho</title>
+    <meta name="description" content="Portfolio gallery showcasing projects by Hung Ho" />
 
-  <body>
-    <header>
-      <h1>Hung Ho <br> <span>[ Portfolio Gallery ]</span></h1>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#3b82f6",
+              secondary: "#64748b",
+              dark: "#0f172a",
+              card: "#1e293b",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #0f172a; }
+      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #475569; }
+      html { scroll-behavior: smooth; }
+      body { background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
+
+      /* Modal styles */
+      .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; justify-content: center; align-items: center; }
+      .modal.active { display: flex; }
+      .modal img { max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+    </style>
+  </head>
+  <body class="antialiased font-sans">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-dark/80 backdrop-blur-md border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          HH
+        </a>
+        <div class="flex items-center space-x-6">
+          <a href="index.html" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+            ← Back to Home
+          </a>
+        </div>
+      </div>
     </header>
 
-    <div class="container">
-      <nav>
-          <ul>
-              <li class="current"><a href="#">All projects</a></li>
-              <li><a href="#">Quanturi</a></li>
-              <li><a href="#">Verto Analytics</a></li>
-              <li><a href="#">Lapioworks</a></li>
-              <li><a href="#">Film Friend</a></li>
-              <li><a href="#">Personal</a></li>
-          </ul>
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 px-6 max-w-7xl mx-auto">
+      <!-- Title -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Portfolio Gallery</h1>
+        <p class="text-slate-400 text-lg">A showcase of projects I've worked on</p>
+      </div>
+
+      <!-- Filter Navigation -->
+      <nav class="mb-10">
+        <ul class="flex flex-wrap justify-center gap-2" id="filters">
+          <li>
+            <button class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="all">
+              All Projects
+            </button>
+          </li>
+          <li>
+            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="quanturi">
+              Quanturi
+            </button>
+          </li>
+          <li>
+            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="verto-analytics">
+              Verto Analytics
+            </button>
+          </li>
+          <li>
+            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="lapioworks">
+              Lapioworks
+            </button>
+          </li>
+          <li>
+            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="film-friend">
+              Film Friend
+            </button>
+          </li>
+          <li>
+            <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-all" data-filter="personal">
+              Personal
+            </button>
+          </li>
+        </ul>
       </nav>
-      <div id="projects">
-          <ul id="gallery">
-              <li class="quanturi"><a href="#"><img src="images/quanturi-1.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-2.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-3.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-4.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-5.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-6.png"></a></li>
-              <li class="quanturi"><a href="#"><img src="images/quanturi-7.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-dashboard-1.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-dashboard-2.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-dashboard-3.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-dashboard-4.jpg"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-dashboard-5.jpg"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/smart-panel-1.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/smart-panel-2.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-meta-data-manager-1.png"></a></li>
-              <li class="verto-analytics"><a href="#"><img src="images/verto-meta-data-manager-2.png"></a></li>
-              <li class="film-friend"><a href="#"><img src="images/filmfriend-1.png"></a></li>
-              <li class="film-friend"><a href="#"><img src="images/filmfriend-2.jpg"></a></li>
-              <li class="film-friend"><a href="#"><img src="images/filmfriend-3.png"></a></li>
-              <li class="lapioworks"><a href="#"><img src="images/bookiwoo-1.png"></a></li>
-              <li class="lapioworks"><a href="#"><img src="images/bookiwoo-2.png"></a></li>
-              <li class="lapioworks"><a href="#"><img src="images/bookiwoo-3.png"></a></li>
-              <li class="personal">
-                <a href="#"><img src="images/react-hooks-video-player-1.png">
-                    <div class="description">
-                        <span class="demoLink">https://react-hooks-videoplayer-hung-ho-jah6xgnpg.now.sh</span>
-                        <span class="sourceCode">https://github.com/bpc1985/react-hooks-playground/tree/master/react-hooks-videoplayer</span>
-                    </div>
-                </a>
-              </li>
-              <li class="personal">
-                <a href="#"><img src="images/react-hooks-video-player-2.png">
-                    <div class="description">
-                        <span class="demoLink">https://react-hooks-videoplayer-hung-ho-jah6xgnpg.now.sh</span>
-                        <span class="sourceCode">https://github.com/bpc1985/react-hooks-playground/tree/master/react-hooks-videoplayer</span>
-                    </div>
-                </a>
-              </li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-1.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-2.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-3.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-4.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-5.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-6.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-7.png"></a></li>
-              <li class="personal"><a href="#"><img src="images/sick-fits-8.png"></a></li>
-          </ul>
-          </nav>
-      </div>
-      <!-- modal gallery -->
-      <div class="gallery">
-          <a class="close" href="#">
-              <i>
-              <span class="bar"></span>
-              <span class="bar"></span>
-              </i>
-          </a>
-          <img src="" />
-          <br />
-          <div class="description">
-            <a href="/" class="demoLink" target="_blank">Demo Link</a>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href="/" class="sourceCode" target="_blank">Source Code</a>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gallery">
+        <!-- Quanturi -->
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-1.png" alt="Quanturi Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
           </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-2.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-3.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-4.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-5.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-6.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item quanturi group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/quanturi-7.png" alt="Quanturi" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Quanturi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verto Analytics -->
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-dashboard-1.png" alt="Verto Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-dashboard-2.png" alt="Verto Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-dashboard-3.png" alt="Verto Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-dashboard-4.jpg" alt="Verto Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-dashboard-5.jpg" alt="Verto Dashboard" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/smart-panel-1.png" alt="Smart Panel" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/smart-panel-2.png" alt="Smart Panel" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-meta-data-manager-1.png" alt="Verto Meta Data Manager" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item verto-analytics group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/verto-meta-data-manager-2.png" alt="Verto Meta Data Manager" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Verto Analytics</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Film Friend -->
+        <div class="gallery-item film-friend group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/filmfriend-1.png" alt="Film Friend" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Film Friend</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item film-friend group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/filmfriend-2.jpg" alt="Film Friend" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Film Friend</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item film-friend group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/filmfriend-3.png" alt="Film Friend" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Film Friend</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lapioworks (Bookiwoo) -->
+        <div class="gallery-item lapioworks group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/bookiwoo-1.png" alt="Bookiwoo" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Lapioworks</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item lapioworks group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/bookiwoo-2.png" alt="Bookiwoo" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Lapioworks</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item lapioworks group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/bookiwoo-3.png" alt="Bookiwoo" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Lapioworks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Projects -->
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/react-hooks-video-player-1.png" alt="React Hooks Video Player" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">React Hooks Video Player</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/react-hooks-video-player-2.png" alt="React Hooks Video Player" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">React Hooks Video Player</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-1.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-2.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-3.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-4.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-5.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-6.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-7.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item personal group cursor-pointer" onclick="openModal(this)">
+          <div class="relative overflow-hidden rounded-xl border border-slate-700 hover:border-blue-500/50 transition-all">
+            <img src="images/sick-fits-8.png" alt="Sick Fits" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-sm font-medium">Sick Fits</span>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" onclick="closeModal(event)">
+      <button class="absolute top-6 right-6 text-white hover:text-slate-300 transition-colors" onclick="closeModal(event)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <img id="modal-img" src="" alt="Full size image" />
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
+      <p>&copy; 2025 Hung Ngoc Ho. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Filter functionality
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          filterBtns.forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
+          filterBtns.forEach(b => b.classList.add('bg-slate-800', 'text-slate-300', 'hover:bg-slate-700'));
+          btn.classList.add('active', 'bg-blue-600', 'text-white');
+          btn.classList.remove('bg-slate-800', 'text-slate-300', 'hover:bg-slate-700');
+
+          const filter = btn.dataset.filter;
+
+          galleryItems.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Set initial button styles
+      filterBtns.forEach(btn => {
+        if (btn.classList.contains('active')) {
+          btn.classList.add('bg-blue-600', 'text-white');
+        } else {
+          btn.classList.add('bg-slate-800', 'text-slate-300', 'hover:bg-slate-700');
+        }
+      });
+
+      // Modal functionality
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+
+      function openModal(element) {
+        const img = element.querySelector('img');
+        modalImg.src = img.src;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal(event) {
+        if (event.target === modal || event.target.closest('button')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    </script>
   </body>
 </html>
